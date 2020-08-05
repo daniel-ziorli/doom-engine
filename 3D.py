@@ -12,12 +12,11 @@ ORANGE    = (255,165,0)
 nice =(10,10,50)
 
 pygame.init()
-pygame.mixer.init()
 
 size = (1920, 1080)
 mid = (size[0]/2,size[1]/2)
-screen = pygame.display.set_mode(size,pygame.FULLSCREEN)
-pygame.display.set_caption('Anth Is Gay For Swift')
+screen = pygame.display.set_mode(size)
+pygame.display.set_caption('Doom Engine')
 done = False
 clock = pygame.time.Clock()
 
@@ -176,8 +175,8 @@ def RunEditor():
     cam.MoveCamera()
     for walls in level_walls:
         pygame.draw.line(screen,RED,(walls.startPoint.x + cam.position.x,walls.startPoint.y + cam.position.y),(walls.endPoint.x + cam.position.x,walls.endPoint.y + cam.position.y),1)
-        pygame.draw.circle(screen,RED,(walls.startPoint.x + cam.position.x,walls.startPoint.y + cam.position.y),2,0)
-        pygame.draw.circle(screen,RED,(walls.endPoint.x + cam.position.x,walls.endPoint.y + cam.position.y),2,0)
+        pygame.draw.circle(screen,RED,(int(round(walls.startPoint.x + cam.position.x)), int(round(walls.startPoint.y + cam.position.y))),2,0)
+        pygame.draw.circle(screen,RED,(int(round(walls.endPoint.x + cam.position.x)),int(round(walls.endPoint.y + cam.position.y))),2,0)
 
     global first
     if first:
@@ -191,7 +190,7 @@ def RunEditor():
         x = int(RoundToMultiple(pos[0],scale))
         y = int(RoundToMultiple(pos[1],scale))
         pygame.draw.circle(screen,GREEN,(x,y),3,1)
-    pygame.draw.circle(screen,WHITE,(int(round(player.position.x)+cam.position.x),int(round(player.position.y))+cam.position.y),3,1)
+    pygame.draw.circle(screen,WHITE,(int(round(player.position.x+cam.position.x)),int(round(player.position.y+cam.position.y))),3,1)
     global click
 
 def SetWallPoints():
@@ -202,7 +201,7 @@ def SetWallPoints():
     for line in data:
         words = line.split(",")
         if words != "":
-            tempWall = Wall(int(words[0]),int(words[1]),int(words[2]),int(words[3]))
+            tempWall = Wall(int(float(words[0])),int(float(words[1])),int(float(words[2])),int(float(words[3])))
             level_walls.append(tempWall)
 first = False
 click = False
